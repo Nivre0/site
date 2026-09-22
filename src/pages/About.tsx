@@ -2,6 +2,8 @@ import Section from '../components/Section'
 import { about, profile } from '../data/profile'
 import usePageTitle from '../hooks/usePageTitle'
 
+const skillGroups = about.skillGroups.filter((group) => group.skills.length > 0)
+
 export default function About() {
   usePageTitle(`About · ${profile.name}`)
 
@@ -13,13 +15,18 @@ export default function About() {
         <p key={i}>{paragraph}</p>
       ))}
 
-      {about.skills.length > 0 && (
+      {skillGroups.length > 0 && (
         <Section title="Things I work with">
-          <ul className="pills">
-            {about.skills.map((skill) => (
-              <li key={skill}>{skill}</li>
-            ))}
-          </ul>
+          {skillGroups.map((group) => (
+            <div key={group.level} className="skill-group">
+              <h3 className="skill-level">{group.label}</h3>
+              <ul className="pills" data-level={group.level}>
+                {group.skills.map((skill) => (
+                  <li key={skill}>{skill}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </Section>
       )}
 
@@ -27,12 +34,12 @@ export default function About() {
         <Section title="Experience">
           <ol className="timeline">
             {about.experience.map((item) => (
-              <li key={`${item.org}-${item.period}`}>
+              <li key={`${item.role}-${item.period}`}>
                 <div className="timeline-head">
                   <strong>{item.role}</strong>
                   <span className="muted">{item.period}</span>
                 </div>
-                <div className="muted">{item.org}</div>
+                {item.org && <div className="muted">{item.org}</div>}
                 <p>{item.description}</p>
               </li>
             ))}

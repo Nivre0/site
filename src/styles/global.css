@@ -266,6 +266,34 @@ p + p {
   font-size: 0.775rem;
 }
 
+/* ---------- skills ---------- */
+
+.skill-group + .skill-group {
+  margin-top: 1.25rem;
+}
+
+.skill-level {
+  margin-bottom: 0.5rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Stronger fill reads as stronger skill. */
+.pills[data-level='mastered'] li,
+.pills[data-level='high'] li {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.pills[data-level='low'] li {
+  background: transparent;
+  color: var(--muted);
+}
+
 .timeline {
   display: grid;
   gap: 1.75rem;

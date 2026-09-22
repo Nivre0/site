@@ -10,9 +10,20 @@ export type Link = {
 
 export type Experience = {
   role: string
-  org: string
+  /** Company or school. Leave out for entries that don't have one. */
+  org?: string
   period: string
   description: string
+}
+
+/** Ordered strongest to weakest — the About page renders them in this order. */
+export type SkillLevel = 'mastered' | 'high' | 'moderate' | 'low'
+
+export type SkillGroup = {
+  level: SkillLevel
+  label: string
+  /** An empty group is skipped, so you can leave a level in place until you fill it. */
+  skills: string[]
 }
 
 export type Project = {
@@ -23,19 +34,19 @@ export type Project = {
 }
 
 export const profile = {
-  name: 'Your Name',
+  name: 'Tim Leuenberger',
   /** Shown under the name on the home page. */
   tagline: 'Software developer',
   /** Optional — city, country. Leave empty to hide. */
-  location: '',
+  location: 'Zurich, Switzerland',
   /** One or two short paragraphs for the home page. */
   intro: [
-    'Hi, I’m — replace this with a sentence or two about who you are and what you work on.',
-    'The second paragraph is a good place for what you’re currently focused on, or what you’d like people to reach out about.',
+    'I’m a software developer based in Zurich, Switzerland. I trained through the Swiss apprenticeship route and finished as an application developer in the summer of 2026.',
+    'I work mostly with C#, Python and SQL, and I like problems that stretch from the database up to the interface. Right now I’m interning at Kajima — if you’d like to work together, or just want to say hello, my inbox is open.',
   ],
   /** Put an image at public/avatar.jpg and set this, or leave empty to hide. */
   avatar: '',
-  email: '',
+  email: 'timleu256@gmail.com',
 } satisfies {
   name: string
   tagline: string
@@ -46,54 +57,70 @@ export const profile = {
 }
 
 export const links: Link[] = [
-  { label: 'GitHub', href: 'https://github.com/' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
+  { label: 'GitHub', href: 'https://github.com/Nivre0/' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/tim-l-a65275274' },
 ]
 
 export const about = {
   /** Longer free-form paragraphs for the About page. */
   paragraphs: [
-    'This is the longer version of your story. Where you started, what you’ve worked on, what you care about.',
-    'Keep it in your own voice — a few short paragraphs beat a wall of text.',
+    'I’m a software developer from Zurich, Switzerland. I came into the field the Swiss way: a four-year apprenticeship, working at a company while studying alongside it, finishing in July 2026 with the federal diploma as an application developer — Informatiker Applikationsentwicklung EFZ.',
+    'That route means you’re in a real team from the first year, so most of what I know comes from building and maintaining software people actually use, not only from coursework. It also left me comfortable moving between languages rather than tied to one.',
+    'I’m currently interning at Kajima until the end of 2026. After that I’ll be completing my Swiss military service, and once that’s behind me I’ll be looking for my next role as a developer.',
+    // A personal line fits nicely here — what you do outside of work, or what you're learning next.
   ],
-  /** Rendered as pills. Group however you like. */
-  skills: [
-    'TypeScript',
-    'React',
-    'Node.js',
-    'Python',
-    'SQL',
-    'Docker',
-  ],
+  /**
+   * Skills grouped by how well you know them.
+   * Empty groups are skipped, so 'mastered' stays hidden until you put something in it.
+   */
+  skillGroups: [
+    {
+      level: 'mastered',
+      label: 'Mastered',
+      skills: [],
+    },
+    {
+      level: 'high',
+      label: 'High',
+      skills: ['C#', 'SQL', 'Python'],
+    },
+    {
+      level: 'moderate',
+      label: 'Moderate',
+      skills: ['JavaScript', 'TypeScript', 'Java', 'HTML & CSS'],
+    },
+    {
+      level: 'low',
+      label: 'Low',
+      skills: ['C', 'C++'],
+    },
+  ] satisfies SkillGroup[],
   /** Set to an empty array to hide the timeline section. */
   experience: [
     {
-      role: 'Your role',
-      org: 'Company or project',
-      period: '2024 — present',
-      description: 'A line about what you do there and what you shipped.',
+      role: 'Swiss military service',
+      period: 'From 2027',
+      description: 'Mandatory service, starting after the internship ends.',
     },
     {
-      role: 'Previous role',
-      org: 'Earlier company',
-      period: '2021 — 2024',
-      description: 'Another line. Delete or add entries freely.',
+      role: 'Intern',
+      org: 'Kajima',
+      period: 'Sep 2026 — Dec 2026',
+      description:
+        'Working as a developer alongside the team, building on what I learned during my apprenticeship.',
+    },
+    {
+      role: 'Apprentice application developer (EFZ)',
+      org: 'KPMG',
+      period: 'Aug 2022 — Jul 2026',
+      description:
+        'Four-year Swiss apprenticeship combining full-time work as a developer with vocational school, completed with the federal diploma Informatiker Applikationsentwicklung EFZ.',
     },
   ] satisfies Experience[],
 }
 
-export const projects: Project[] = [
-  {
-    name: 'Project one',
-    description:
-      'What it does and why you built it. One or two sentences is plenty.',
-    tags: ['React', 'TypeScript'],
-    href: '',
-  },
-  {
-    name: 'Project two',
-    description: 'Another thing you made. Remove this file’s placeholders as you go.',
-    tags: ['Python'],
-    href: '',
-  },
-]
+/**
+ * Nothing here yet — the Projects page shows a short placeholder until you add
+ * an entry. One object per project and the page fills itself in.
+ */
+export const projects: Project[] = []
